@@ -842,10 +842,14 @@ body {
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         padding-bottom: 2rem;
-        gap: 1.5rem;
+        gap: 1rem;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         /* Firefox */
+        margin: 0 -5%;
+        /* Pull edge to edge */
+        padding: 0 5% 2rem;
+        /* Restore padding inside scroll */
     }
 
     .impact-grid::-webkit-scrollbar {
@@ -854,8 +858,12 @@ body {
     }
 
     .feature-card {
-        min-width: 280px;
-        scroll-snap-align: start;
+        width: 85vw;
+        /* Take up most of the screen width */
+        max-width: 320px;
+        /* But not more than 320px */
+        scroll-snap-align: center;
+        /* Center snap feels better */
         flex: 0 0 auto;
     }
 
@@ -877,9 +885,33 @@ body {
         justify-content: center;
     }
 
-    .nav-links,
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(1, 32, 48, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        gap: 1.5rem;
+        text-align: center;
+        border-bottom: 1px solid var(--glass-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
     .desktop-btn {
         display: none;
+    }
+
+    .desktop-btn.active {
+        display: inline-block;
+        margin-top: 1rem;
     }
 
     .mobile-menu-btn {
@@ -899,6 +931,10 @@ body {
 @media (max-width: 480px) {
     .section {
         padding: 5rem 5% 3rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
     }
 
     .section-title,
