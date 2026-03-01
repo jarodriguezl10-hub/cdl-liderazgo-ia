@@ -20,6 +20,12 @@
     scroll-behavior: smooth;
 }
 
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
@@ -833,6 +839,7 @@ body {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
+    text-align: left;
 }
 
 .mentor-link {
@@ -1073,15 +1080,47 @@ body {
     .feature-card::after,
     .plan-card::after,
     .mentor-card::after {
-        content: '\2192';
-        /* Right arrow */
+        content: '\203A';
+        /* Right arrow › */
         position: absolute;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        font-size: 1.5rem;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        font-size: 2.5rem;
         color: var(--accent-tertiary);
-        opacity: 0.8;
-        animation: subtle-bounce-right 1.5s infinite;
+        opacity: 0.5;
+        animation: subtle-bounce-right-middle 1.5s infinite;
+        pointer-events: none;
+    }
+
+    .feature-card:not(:first-child)::before,
+    .plan-card:not(:first-child)::before,
+    .mentor-card:not(:first-child)::before {
+        content: '\2039';
+        /* Left arrow ‹ */
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+        font-size: 2.5rem;
+        color: var(--accent-tertiary);
+        opacity: 0.5;
+        animation: subtle-bounce-left-middle 1.5s infinite;
+        pointer-events: none;
+    }
+
+    .impact-grid .feature-card:last-child::after,
+    .plan-grid .plan-card:nth-last-child(2)::after,
+    .mentors-grid .mentor-card:last-child::after {
+        content: '\2304';
+        /* Down chevron */
+        top: auto;
+        bottom: 0.5rem;
+        right: 50%;
+        transform: translateX(50%);
+        font-size: 2.5rem;
+        animation: subtle-bounce-down-center 1.5s infinite;
+        pointer-events: none;
     }
 
 
@@ -1306,14 +1345,38 @@ body {
     margin-bottom: 1.5rem;
 }
 
-@keyframes subtle-bounce-right {
+@keyframes subtle-bounce-right-middle {
 
     0%,
     100% {
-        transform: translateX(0);
+        transform: translate(0, -50%);
     }
 
     50% {
-        transform: translateX(5px);
+        transform: translate(5px, -50%);
+    }
+}
+
+@keyframes subtle-bounce-left-middle {
+
+    0%,
+    100% {
+        transform: translate(0, -50%);
+    }
+
+    50% {
+        transform: translate(-5px, -50%);
+    }
+}
+
+@keyframes subtle-bounce-down-center {
+
+    0%,
+    100% {
+        transform: translateX(50%);
+    }
+
+    50% {
+        transform: translate(50%, 5px);
     }
 }
