@@ -660,7 +660,7 @@ body {
 /* Plan de Estudios Grid */
 .plan-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
 
@@ -1032,7 +1032,9 @@ body {
     }
 
     /* Horizontal scroll for Impacto Section on Mobile */
-    .impact-grid {
+    .impact-grid,
+    .plan-grid,
+    .mentors-grid {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
@@ -1047,12 +1049,17 @@ body {
         /* Restore padding inside scroll */
     }
 
-    .impact-grid::-webkit-scrollbar {
+    .impact-grid::-webkit-scrollbar,
+    .plan-grid::-webkit-scrollbar,
+    .mentors-grid::-webkit-scrollbar {
         display: none;
         /* Chrome/Safari */
     }
 
-    .feature-card {
+    .feature-card,
+    .plan-card,
+    .mentor-card,
+    .plan-waves {
         width: 85vw;
         /* Take up most of the screen width */
         max-width: 320px;
@@ -1063,7 +1070,9 @@ body {
         position: relative;
     }
 
-    .feature-card::after {
+    .feature-card::after,
+    .plan-card::after,
+    .mentor-card::after {
         content: '\2192';
         /* Right arrow */
         position: absolute;
@@ -1075,12 +1084,9 @@ body {
         animation: subtle-bounce-right 1.5s infinite;
     }
 
+
     .timeline {
         text-align: left;
-    }
-
-    .mentors-grid {
-        grid-template-columns: 1fr;
     }
 
     .mentor-card {
@@ -1298,4 +1304,16 @@ body {
 
 .faq-answer p {
     margin-bottom: 1.5rem;
+}
+
+@keyframes subtle-bounce-right {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
 }
