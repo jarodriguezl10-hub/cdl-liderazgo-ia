@@ -53,6 +53,7 @@ body {
 .gradient-text {
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary), var(--text-secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
     animation: gradientFlow 8s ease infinite;
@@ -142,21 +143,26 @@ body {
     width: 100%;
     z-index: 1000;
     transition: all 0.4s ease;
-    background: rgba(1, 32, 48, 0.4);
+    background: linear-gradient(to right, rgba(18, 30, 63, 1) 0%, 24.927953890489913%, rgba(31, 121, 168, 1) 49.85590778097983%, 74.92795389048992%, rgba(210, 227, 236, 1) 100%);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid transparent;
 }
 
-.logo {
-    font-size: 1.5rem;
+.logo-text {
+    font-size: 2rem;
     font-weight: 800;
-    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: -1.5px;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
 }
 
-.logo span {
-    background: linear-gradient(to right, var(--accent-primary), var(--accent-tertiary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.ai-text {
+    color: #8be0a5;
+    /* Bright cyan/green matching the image */
+    font-weight: 800;
 }
 
 .nav-links {
@@ -166,15 +172,24 @@ body {
 }
 
 .nav-links a {
-    color: var(--text-secondary);
+    color: #ffffff;
+    /* Color claro para resaltar en fondo oscuro */
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 1.15rem;
     transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-icon {
+    opacity: 0.9;
+    stroke-width: 2.5;
 }
 
 .nav-links a:hover {
-    color: var(--text-primary);
+    color: var(--accent-tertiary);
 }
 
 .mobile-menu-btn {
@@ -187,7 +202,8 @@ body {
 .mobile-menu-btn span {
     width: 25px;
     height: 2px;
-    background: white;
+    background: #ffffff;
+    /* Color claro para fondo oscuro */
     transition: 0.3s;
 }
 
@@ -218,6 +234,23 @@ body {
     color: var(--text-secondary);
 }
 
+.section-divider {
+    width: 90%;
+    max-width: 1200px;
+    height: 30px;
+    margin: 4rem auto -2rem;
+    /* creates some breathing room from the prev section */
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    background:
+        linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+        linear-gradient(90deg, #13678A, #45C4B0, #9AEBA3) border-box;
+    opacity: 0.8;
+    position: relative;
+    z-index: 5;
+}
+
 /* Hero Section */
 .hero {
     display: flex;
@@ -236,16 +269,26 @@ body {
 .badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.4rem 1rem;
+    padding: 0.8rem 1.6rem;
     background: rgba(69, 196, 176, 0.1);
-    border: 1px solid rgba(69, 196, 176, 0.3);
+    border: 1px solid rgba(69, 196, 176, 0.6);
     border-radius: 50px;
     color: var(--accent-tertiary);
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 2px;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(69, 196, 176, 0.4), inset 0 0 10px rgba(69, 196, 176, 0.2);
+    transition: all 0.4s ease;
+    cursor: default;
+}
+
+.badge:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 25px var(--accent-tertiary), inset 0 0 15px var(--accent-primary);
+    transform: scale(1.05);
+    /* Efecto de engrandecer */
 }
 
 .hero h1 {
@@ -459,8 +502,6 @@ body {
 /* Split Section (Plan de Estudios) */
 .dark-section {
     background: linear-gradient(180deg, transparent, rgba(19, 103, 138, 0.1), transparent);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
 }
 
 .container-split {
@@ -577,6 +618,112 @@ body {
     100% {
         transform: translate(-50%, -50%) scale(1.5);
         opacity: 0;
+    }
+}
+
+/* Course Info Banner */
+.course-info-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: rgba(69, 196, 176, 0.05);
+    border: 1px solid rgba(69, 196, 176, 0.2);
+    border-radius: 16px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-icon {
+    font-size: 1.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.6rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-text strong {
+    color: var(--accent-tertiary);
+    font-weight: 600;
+}
+
+/* Plan de Estudios Grid */
+.plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.plan-card {
+    background: var(--surface-color);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 16px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 10px 20px rgba(1, 32, 48, 0.4);
+}
+
+.module-badge {
+    color: var(--accent-tertiary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(69, 196, 176, 0.1);
+    border-radius: 4px;
+}
+
+.plan-card h4 {
+    font-size: 1.15rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.plan-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.plan-waves {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    grid-column: span 1;
+}
+
+.ring-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+@media (min-width: 650px) {
+    .plan-waves {
+        grid-column: span 2;
     }
 }
 
@@ -784,9 +931,10 @@ body {
 
 /* Footer */
 .footer {
-    border-top: 1px solid var(--glass-border);
-    padding: 2rem 5%;
+    padding: 3rem 5%;
     text-align: center;
+    background: linear-gradient(to right, rgba(18, 30, 63, 1) 0%, 24.927953890489913%, rgba(31, 121, 168, 1) 49.85590778097983%, 74.92795389048992%, rgba(210, 227, 236, 1) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
