@@ -209,14 +209,14 @@ body {
 
 /* Sections Base */
 .section {
-    padding: 8rem 5% 5rem;
+    padding: 5rem 5% 4rem;
     max-width: 1400px;
     margin: 0 auto;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -238,7 +238,7 @@ body {
     width: 90%;
     max-width: 1200px;
     height: 30px;
-    margin: 4rem auto -2rem;
+    margin: 2rem auto -1.5rem;
     /* creates some breathing room from the prev section */
     border: 2px solid transparent;
     border-bottom: none;
@@ -950,8 +950,54 @@ body {
     font-size: 0.9rem;
 }
 
+/* Floating WhatsApp */
+.float-wa {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0px 4px 20px rgba(37, 211, 102, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.float-wa:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0px 6px 25px rgba(37, 211, 102, 0.7);
+}
+
 /* Responsive */
 @media (max-width: 968px) {
+    .logo-text {
+        font-size: 1.5rem;
+        white-space: nowrap;
+    }
+
+    .navbar {
+        padding: 1rem 5%;
+    }
+
+    .float-wa {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .float-wa svg {
+        width: 28px;
+        height: 28px;
+    }
+
     .hero {
         flex-direction: column;
         text-align: center;
@@ -1014,6 +1060,19 @@ body {
         scroll-snap-align: center;
         /* Center snap feels better */
         flex: 0 0 auto;
+        position: relative;
+    }
+
+    .feature-card::after {
+        content: '\2192';
+        /* Right arrow */
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.5rem;
+        color: var(--accent-tertiary);
+        opacity: 0.8;
+        animation: subtle-bounce-right 1.5s infinite;
     }
 
     .timeline {
@@ -1055,7 +1114,7 @@ body {
     }
 
     .desktop-btn {
-        display: none;
+        display: none !important;
     }
 
     .desktop-btn.active {
@@ -1078,8 +1137,12 @@ body {
 }
 
 @media (max-width: 480px) {
+    .logo-text {
+        font-size: 1.25rem;
+    }
+
     .section {
-        padding: 5rem 5% 3rem;
+        padding: 4rem 5% 2rem;
     }
 
     .feature-card {
