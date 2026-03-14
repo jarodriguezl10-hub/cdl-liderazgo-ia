@@ -276,28 +276,44 @@ body {
 
 .badge {
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    padding: 0.8rem 1.6rem;
+    padding: 1rem 2rem;
     background: rgba(69, 196, 176, 0.1);
     border: 1px solid rgba(69, 196, 176, 0.6);
-    border-radius: 50px;
+    border-radius: 25px;
     color: var(--accent-tertiary);
     font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: 1px;
-    white-space: nowrap;
     margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-transform: uppercase;
     box-shadow: 0 0 15px rgba(69, 196, 176, 0.4), inset 0 0 10px rgba(69, 196, 176, 0.2);
     transition: all 0.4s ease;
     cursor: default;
+    width: 100%;
+    text-align: center;
+}
+
+.badge-line-1 {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin-bottom: 0.4rem;
+    letter-spacing: 2px;
+}
+
+.badge-line-2 {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
 }
 
 .badge-highlight {
     color: var(--accent-primary);
     font-style: italic;
     margin: 0 5px;
+    font-size: 1.4rem;
+    /* Enfatizado +2pt */
 }
 
 .badge:hover {
@@ -1023,15 +1039,26 @@ body {
     }
 
     .hero h1 {
-        font-size: 3rem;
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+    }
+
+    .badge {
+        white-space: normal;
+        text-align: center;
+        line-height: 1.4;
     }
 
     .hero-description {
         margin: 0 auto 2.5rem;
+        font-size: 1rem;
     }
 
     .hero-buttons {
         justify-content: center;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10%;
     }
 
     .hero-visual {
@@ -1502,5 +1529,27 @@ body {
     .pricing-card.featured {
         transform: scale(1);
         margin-top: 1rem;
+    }
+
+    .price-main {
+        font-size: 2.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .price-main {
+        font-size: 2.2rem;
+    }
+
+    .pricing-card {
+        padding: 2rem 1.5rem;
     }
 }
