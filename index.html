@@ -309,34 +309,54 @@
                 <h2 class="section-title">Inversión en tu <span class="gradient-text">Futuro</span></h2>
             </div>
 
-            <div class="pricing-grid">
-                <!-- Precio Full -->
-                <a href="#inscribirse" class="pricing-card-link">
-                    <div class="pricing-card full">
-                        <h3 class="price-title">Inversión Regular</h3>
-                        <div class="price-main">597 USD</div>
-                        <div class="price-secondary">Aprox. $2.197.000 COP</div>
-                    </div>
-                </a>
+            <div class="pricing-content">
+                <div class="pricing-grid">
+                    <!-- Precio Full -->
+                    <a href="#inscribirse" class="pricing-card-link">
+                        <div class="pricing-card full">
+                            <h3 class="price-title">Inversión Regular</h3>
+                            <div class="price-main">597 USD</div>
+                            <div class="price-secondary">Aprox. $2.197.000 COP</div>
+                        </div>
+                    </a>
 
-                <!-- Inscripción de Lanzamiento -->
-                <a href="#inscribirse" class="pricing-card-link">
-                    <div class="pricing-card">
-                        <h3 class="price-title">Inscripción de Lanzamiento</h3>
-                        <div class="price-main">497 USD</div>
-                        <div class="price-secondary">Aprox. $1.797.000 COP</div>
-                    </div>
-                </a>
+                    <!-- Inscripción de Lanzamiento -->
+                    <a href="#inscribirse" class="pricing-card-link">
+                        <div class="pricing-card">
+                            <h3 class="price-title">Inscripción de Lanzamiento</h3>
+                            <div class="price-main">497 USD</div>
+                            <div class="price-secondary">Aprox. $1.797.000 COP</div>
+                        </div>
+                    </a>
 
-                <!-- Descuento -->
-                <a href="#inscribirse" class="pricing-card-link">
-                    <div class="pricing-card featured">
-                        <h3 class="price-title">Inscripción Anticipada</h3>
-                        <div class="price-main">399 USD</div>
-                        <div class="price-secondary">Aprox. $1.497.000 COP</div>
-                        <div class="urgency-badge">🔥 ¡ÚLTIMOS CUPOS DISPONIBLES!</div>
+                    <!-- Descuento -->
+                    <a href="#inscribirse" class="pricing-card-link">
+                        <div class="pricing-card featured">
+                            <h3 class="price-title">Inscripción Anticipada</h3>
+                            <div class="price-main">399 USD</div>
+                            <div class="price-secondary">Aprox. $1.497.000 COP</div>
+                            <div class="urgency-badge">🔥 ¡ÚLTIMOS CUPOS DISPONIBLES!</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="payment-methods">
+                    <p class="payment-label">Paga con:</p>
+                    <div class="payment-icons">
+                        <a href="#" class="payment-icon-link" title="Pagar con PSE">
+                            <img src="https://static.wixstatic.com/media/25916a_eb2231e3605e4683832c38d82a3dd73d~mv2.png"
+                                alt="PSE" class="payment-logo">
+                        </a>
+                        <a href="#" class="payment-icon-link" title="Pagar con Mercado Pago">
+                            <img src="https://www.comunidadesenred.org/wp-content/uploads/2021/04/Logo-Mercado-Pago-Png.png"
+                                alt="Mercado Pago" class="payment-logo">
+                        </a>
+                        <a href="#" class="payment-icon-link" title="Pagar con Nequi">
+                            <img src="https://www.agritopia.co/wp-content/uploads/2022/01/logo-nequi.png" alt="Nequi"
+                                class="payment-logo">
+                        </a>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -745,6 +765,30 @@
             setupMobileScroll();
             window.addEventListener('resize', setupMobileScroll);
 
+        });
+    </script>
+    <script>
+        // Automatic Zoom Normalization
+        function normalizeZoom() {
+            const ratio = window.devicePixelRatio || 1;
+            if (ratio > 1) {
+                // If zoom/scaling is > 100%, we calculate the inverse factor
+                // to maintain a visual 100% look.
+                const factor = 1 / ratio;
+                document.documentElement.style.setProperty('--zoom-factor', factor);
+            } else {
+                document.documentElement.style.setProperty('--zoom-factor', '1');
+            }
+        }
+
+        // Run on load and scale changes
+        window.addEventListener('load', normalizeZoom);
+
+        // Listen for window resize which often catches zoom changes
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(normalizeZoom, 250);
         });
     </script>
     <!-- Floating WhatsApp Icon -->
