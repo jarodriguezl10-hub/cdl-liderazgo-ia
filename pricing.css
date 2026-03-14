@@ -1,0 +1,84 @@
+/* Pricing Section */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 3rem auto 0;
+}
+
+.pricing-card {
+    background: var(--surface-color);
+    border: 1px solid var(--glass-border);
+    padding: 3rem 2rem;
+    border-radius: 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.pricing-card.featured {
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 0 30px rgba(69, 196, 176, 0.2);
+    transform: scale(1.05);
+    background: rgba(69, 196, 176, 0.05);
+}
+
+.pricing-card.featured::before {
+    content: 'OFERTA POR TIEMPO LIMITADO';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-primary);
+    color: var(--bg-color);
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.price-title {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.price-main {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.price-secondary {
+    font-size: 1.4rem;
+    color: var(--accent-tertiary);
+    font-weight: 600;
+    display: block;
+}
+
+.pricing-card.full .price-main {
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+.pricing-card.full .price-secondary {
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .pricing-card.featured {
+        transform: scale(1);
+        margin-top: 1rem;
+    }
+}
