@@ -341,7 +341,6 @@
                 </div>
 
                 <div class="payment-methods">
-                    <p class="payment-label">Paga con:</p>
                     <div class="payment-icons">
                         <a href="#" class="payment-icon-link" title="Pagar con PSE">
                             <img src="https://static.wixstatic.com/media/25916a_eb2231e3605e4683832c38d82a3dd73d~mv2.png"
@@ -768,15 +767,19 @@
         });
     </script>
     <script>
-        // Automatic Zoom Normalization
+        // Automatic Zoom Normalization - Only for Desktop
         function normalizeZoom() {
-            const ratio = window.devicePixelRatio || 1;
-            if (ratio > 1) {
-                // If zoom/scaling is > 100%, we calculate the inverse factor
-                // to maintain a visual 100% look.
-                const factor = 1 / ratio;
-                document.documentElement.style.setProperty('--zoom-factor', factor);
+            // Only apply on screens wider than 1024px (Desktop)
+            if (window.innerWidth > 1024) {
+                const ratio = window.devicePixelRatio || 1;
+                if (ratio > 1) {
+                    const factor = 1 / ratio;
+                    document.documentElement.style.setProperty('--zoom-factor', factor);
+                } else {
+                    document.documentElement.style.setProperty('--zoom-factor', '1');
+                }
             } else {
+                // On mobile/tablets, keep standard 100% scale
                 document.documentElement.style.setProperty('--zoom-factor', '1');
             }
         }
