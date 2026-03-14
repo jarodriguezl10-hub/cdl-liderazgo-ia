@@ -138,6 +138,7 @@ body {
 .btn-large {
     padding: 1rem 2.5rem;
     font-size: 1.05rem;
+    white-space: nowrap;
 }
 
 /* Navbar */
@@ -349,7 +350,8 @@ body {
 .hero-buttons {
     display: flex;
     gap: 1.2rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 /* Hero Image Visual */
@@ -1078,9 +1080,18 @@ body {
 
     .hero-buttons {
         justify-content: center;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0 10%;
+        flex-direction: row;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0;
+    }
+
+    .hero-buttons .btn-large {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.8rem;
+        flex: 1;
+        white-space: nowrap;
+        min-width: 0;
     }
 
     .hero-visual {
@@ -1260,7 +1271,15 @@ body {
     }
 
     .hero-buttons {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.3rem;
+    }
+
+    .hero-buttons .btn-large {
+        font-size: 0.7rem;
+        padding: 0.6rem 0.3rem;
+        letter-spacing: 0;
+        white-space: nowrap;
     }
 
     .cta-container {
