@@ -697,6 +697,28 @@ body {
     gap: 1.5rem;
 }
 
+.pricing-card-link {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.pricing-card-link:hover {
+    transform: translateY(-10px);
+}
+
+.pricing-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    cursor: pointer;
+}
+
 .plan-card {
     background: var(--surface-color);
     border: 1px solid var(--glass-border);
