@@ -3,7 +3,10 @@
     position: relative;
     width: 100%;
     max-width: 1200px;
-    margin: 3rem auto 0;
+    margin: 2.5rem auto 0 !important;
+    /* Reduced gap as requested */
+    padding-top: 20px !important;
+    /* Internal space for the hanging badge */
 }
 
 .pricing-scroll-wrapper {
@@ -11,9 +14,9 @@
 }
 
 .pricing-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block !important;
 }
 
 .pricing-grid {
@@ -26,7 +29,10 @@
 
 @media (max-width: 768px) {
     .pricing-scroll-container {
-        margin-top: 2rem;
+        margin-top: 1rem !important;
+        /* Drastically reduced gap for mobile */
+        padding-top: 20px !important;
+        /* Space for the badge badge */
     }
 
     .pricing-scroll-wrapper {
@@ -99,13 +105,15 @@
 .pricing-card.featured::before {
     content: 'OFERTA POR TIEMPO LIMITADO';
     position: absolute;
-    top: -15px;
+    top: 0;
+    /* Flush with top edge as requested */
     left: 50%;
     transform: translateX(-50%);
     background: #ff6b35 !important;
     color: #ffffff !important;
     padding: 0.5rem 1.5rem !important;
-    border-radius: 20px !important;
+    border-radius: 0 0 20px 20px !important;
+    /* Rounded bottom only for a cleaner integrate look */
     font-size: 0.75rem !important;
     font-weight: 800 !important;
     letter-spacing: 1px !important;
