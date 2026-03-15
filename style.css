@@ -741,8 +741,9 @@ body {
 /* Inversión / Pricing Section */
 .pricing-content {
     display: flex;
-    gap: 2rem;
-    align-items: stretch;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
 }
 
 .pricing-grid {
@@ -753,31 +754,105 @@ body {
 }
 
 .payment-methods {
-    width: 100px;
-    padding: 1rem 0;
+    width: 100%;
+    padding: 1.5rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.payment-logos-wrapper {
+    background: white;
+    padding: 0.5rem 2rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 95%;
+    position: relative;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.payment-logos-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .payment-logos-wrapper {
+        justify-content: flex-start;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+.scroll-arrow-btn {
+    display: none;
+    /* Oculto por defecto */
+}
+
+@media (max-width: 768px) {
+    .scroll-arrow-btn {
+        display: flex;
+        position: absolute;
+        bottom: 8px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        color: #000;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        animation: arrow-bounce 1.5s infinite;
+    }
+
+    .scroll-arrow-btn:hover {
+        background: rgba(0, 0, 0, 0.2);
+        transform: scale(1.1);
+    }
+}
+
+@keyframes arrow-bounce {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
 }
 
 .payment-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 2rem;
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    font-weight: 600;
-    opacity: 0.7;
+    letter-spacing: 1px;
 }
 
 .payment-icons {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .payment-icon-link {
@@ -789,13 +864,17 @@ body {
 }
 
 .payment-logo {
-    width: 70px;
-    /* Slightly larger logos */
+    width: 130px;
+    /* Increased size significantly */
     height: auto;
     filter: none;
-    /* Remove forced grayscale to ensure visibility */
-    opacity: 0.9;
-    transition: all 0.3s ease;
+    opacity: 1;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: block;
+}
+
+.payment-logo:hover {
+    transform: scale(1.15);
 }
 
 .payment-icon-link:hover {
@@ -1616,6 +1695,25 @@ body {
     letter-spacing: 1px;
     white-space: nowrap;
     box-shadow: 0 4px 15px var(--accent-orange-glow);
+}
+
+.price-strike {
+    position: relative;
+    display: inline-block;
+}
+
+.price-strike::after {
+    content: "";
+    position: absolute;
+    left: -5%;
+    top: 50%;
+    width: 110%;
+    height: 4px;
+    background: #ff4d4d;
+    /* Reddish for strike */
+    transform: rotate(-12deg);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
 }
 
 .urgency-badge {
