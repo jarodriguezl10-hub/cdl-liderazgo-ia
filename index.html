@@ -21,6 +21,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pricing.css">
 
     <!-- AEO Schema Markup: Course & FAQ -->
     <script type="application/ld+json">
@@ -309,20 +310,22 @@
                 <h2 class="section-title">Inversión en tu <span class="gradient-text">Futuro</span></h2>
                 <div class="payment-methods">
                     <div class="payment-logos-wrapper">
-                        <div class="payment-icons">
-                            <a href="#" class="payment-icon-link" title="Pagar con PSE">
-                                <img src="assets/payment-logos/pse.png" alt="PSE" class="payment-logo">
-                            </a>
-                            <a href="#" class="payment-icon-link" title="Pagar con Mercado Pago">
-                                <img src="assets/payment-logos/mercado-pago.png" alt="Mercado Pago"
-                                    class="payment-logo">
-                            </a>
-                            <a href="#" class="payment-icon-link" title="Pagar con Nequi">
-                                <img src="assets/payment-logos/nequi.png" alt="Nequi" class="payment-logo">
-                            </a>
-                            <a href="#" class="payment-icon-link" title="Pagar con Bre-B">
-                                <img src="assets/payment-logos/bre-b.png" alt="Bre-B" class="payment-logo">
-                            </a>
+                        <div class="payment-logos-scroll-area">
+                            <div class="payment-icons">
+                                <a href="#" class="payment-icon-link" title="Pagar con PSE">
+                                    <img src="assets/payment-logos/pse.png" alt="PSE" class="payment-logo">
+                                </a>
+                                <a href="#" class="payment-icon-link" title="Pagar con Mercado Pago">
+                                    <img src="assets/payment-logos/mercado-pago.png" alt="Mercado Pago"
+                                        class="payment-logo">
+                                </a>
+                                <a href="#" class="payment-icon-link" title="Pagar con Nequi">
+                                    <img src="assets/payment-logos/nequi.png" alt="Nequi" class="payment-logo">
+                                </a>
+                                <a href="#" class="payment-icon-link" title="Pagar con Bre-B">
+                                    <img src="assets/payment-logos/bre-b.png" alt="Bre-B" class="payment-logo">
+                                </a>
+                            </div>
                         </div>
                         <button class="scroll-arrow-btn" aria-label="Ver más métodos de pago">→</button>
                     </div>
@@ -330,34 +333,39 @@
             </div>
 
             <div class="pricing-content">
-                <div class="pricing-grid">
-                    <!-- Descuento (Featured/First) -->
-                    <a href="#inscribirse" class="pricing-card-link">
-                        <div class="pricing-card featured">
-                            <h3 class="price-title">Inscripción Anticipada</h3>
-                            <div class="price-main">397 USD</div>
-                            <div class="price-secondary">Aprox. $1.497.000 COP</div>
-                            <div class="urgency-badge">🔥 ¡ÚLTIMOS CUPOS DISPONIBLES!</div>
-                        </div>
-                    </a>
+                <div class="pricing-scroll-container">
+                    <div class="pricing-scroll-wrapper">
+                        <div class="pricing-grid">
+                            <!-- Descuento (Featured/First) -->
+                            <a href="#inscribirse" class="pricing-card-link">
+                                <div class="pricing-card featured">
+                                    <h3 class="price-title">Inscripción Anticipada</h3>
+                                    <div class="price-main">397 USD</div>
+                                    <div class="price-secondary">Aprox. $1.497.000 COP</div>
+                                    <div class="urgency-badge">🔥 ¡ÚLTIMOS CUPOS DISPONIBLES!</div>
+                                </div>
+                            </a>
 
-                    <!-- Inscripción de Lanzamiento -->
-                    <a href="#inscribirse" class="pricing-card-link">
-                        <div class="pricing-card">
-                            <h3 class="price-title">Inscripción de Lanzamiento</h3>
-                            <div class="price-main price-strike">497 USD</div>
-                            <div class="price-secondary">Aprox. $1.797.000 COP</div>
-                        </div>
-                    </a>
+                            <!-- Inscripción de Lanzamiento -->
+                            <a href="#inscribirse" class="pricing-card-link">
+                                <div class="pricing-card">
+                                    <h3 class="price-title">Inscripción de Lanzamiento</h3>
+                                    <div class="price-main price-strike">497 USD</div>
+                                    <div class="price-secondary">Aprox. $1.797.000 COP</div>
+                                </div>
+                            </a>
 
-                    <!-- Precio Full (Last) -->
-                    <a href="#inscribirse" class="pricing-card-link">
-                        <div class="pricing-card full">
-                            <h3 class="price-title">Inversión Regular</h3>
-                            <div class="price-main price-strike">597 USD</div>
-                            <div class="price-secondary">Aprox. $2.197.000 COP</div>
+                            <!-- Precio Full (Last) -->
+                            <a href="#inscribirse" class="pricing-card-link">
+                                <div class="pricing-card full">
+                                    <h3 class="price-title">Inversión Regular</h3>
+                                    <div class="price-main price-strike">597 USD</div>
+                                    <div class="price-secondary">Aprox. $2.197.000 COP</div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    </div>
+                    <button class="pricing-scroll-btn scroll-arrow-btn" aria-label="Ver más precios">→</button>
                 </div>
             </div>
     </section>
@@ -727,27 +735,49 @@
             window.addEventListener('resize', setupMobileScroll);
 
             // Lógica de Scroll para Métodos de Pago
-            const scrollBtn = document.querySelector('.scroll-arrow-btn');
-            const scrollContainer = document.querySelector('.payment-logos-wrapper');
+            const paymentScrollBtn = document.querySelector('.payment-methods .scroll-arrow-btn');
+            const paymentScrollContainer = document.querySelector('.payment-logos-scroll-area');
 
-            if (scrollBtn && scrollContainer) {
-                scrollBtn.addEventListener('click', () => {
-                    const scrollAmount = 200; // Desplazamiento por click
-                    scrollContainer.scrollBy({
-                        left: scrollAmount,
+            if (paymentScrollBtn && paymentScrollContainer) {
+                paymentScrollBtn.addEventListener('click', () => {
+                    paymentScrollContainer.scrollBy({
+                        left: 200,
                         behavior: 'smooth'
                     });
                 });
 
-                // Ocultar flecha si ya llegamos al final (opcional, pero profesional)
-                scrollContainer.addEventListener('scroll', () => {
-                    const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-                    if (scrollContainer.scrollLeft >= maxScroll - 5) {
-                        scrollBtn.style.opacity = '0';
-                        scrollBtn.style.pointerEvents = 'none';
+                paymentScrollContainer.addEventListener('scroll', () => {
+                    const maxScroll = paymentScrollContainer.scrollWidth - paymentScrollContainer.clientWidth;
+                    if (paymentScrollContainer.scrollLeft >= maxScroll - 10) {
+                        paymentScrollBtn.style.opacity = '0';
+                        paymentScrollBtn.style.pointerEvents = 'none';
                     } else {
-                        scrollBtn.style.opacity = '0.8';
-                        scrollBtn.style.pointerEvents = 'auto';
+                        paymentScrollBtn.style.opacity = '1';
+                        paymentScrollBtn.style.pointerEvents = 'auto';
+                    }
+                });
+            }
+
+            // Lógica de Scroll para Tarjetas de Precios
+            const pricingScrollBtn = document.querySelector('.pricing-scroll-btn');
+            const pricingScrollContainer = document.querySelector('.pricing-scroll-wrapper');
+
+            if (pricingScrollBtn && pricingScrollContainer) {
+                pricingScrollBtn.addEventListener('click', () => {
+                    pricingScrollContainer.scrollBy({
+                        left: 320,
+                        behavior: 'smooth'
+                    });
+                });
+
+                pricingScrollContainer.addEventListener('scroll', () => {
+                    const maxScroll = pricingScrollContainer.scrollWidth - pricingScrollContainer.clientWidth;
+                    if (pricingScrollContainer.scrollLeft >= maxScroll - 20) {
+                        pricingScrollBtn.style.opacity = '0';
+                        pricingScrollBtn.style.pointerEvents = 'none';
+                    } else {
+                        pricingScrollBtn.style.opacity = '1';
+                        pricingScrollBtn.style.pointerEvents = 'auto';
                     }
                 });
             }

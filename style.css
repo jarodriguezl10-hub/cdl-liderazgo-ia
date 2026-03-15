@@ -766,7 +766,6 @@ body {
 
 .payment-logos-wrapper {
     background: white;
-    padding: 0.5rem 2rem;
     border-radius: 24px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     display: flex;
@@ -774,22 +773,29 @@ body {
     align-items: center;
     max-width: 95%;
     position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.payment-logos-scroll-area {
+    width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 2rem;
 }
 
-.payment-logos-wrapper::-webkit-scrollbar {
+.payment-logos-scroll-area::-webkit-scrollbar {
     display: none;
 }
 
 @media (max-width: 768px) {
-    .payment-logos-wrapper {
+    .payment-logos-scroll-area {
         justify-content: flex-start;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-right: 4rem;
     }
 }
 
@@ -1716,75 +1722,9 @@ body {
     box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
 }
 
-.urgency-badge {
-    display: inline-block;
-    background: rgba(255, 107, 53, 0.1);
-    color: var(--accent-orange);
-    padding: 0.3rem 0.8rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-top: 1.5rem;
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    animation: pulse-orange 2s infinite;
-}
 
-@keyframes pulse-orange {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.6;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.price-title {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    margin-bottom: 2rem;
-    font-weight: 600;
-    opacity: 0.9;
-}
-
-.price-main {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.price-secondary {
-    font-size: 1.4rem;
-    color: var(--accent-tertiary);
-    font-weight: 600;
-    display: block;
-}
-
-.pricing-card.full .price-main {
-    opacity: 0.6;
-    text-decoration: none;
-}
-
-.pricing-card.full .price-secondary {
-    opacity: 0.6;
-}
 
 @media (max-width: 768px) {
-    .pricing-card.featured {
-        transform: scale(1);
-        margin-top: 1rem;
-    }
-
-    .price-main {
-        font-size: 2.5rem;
-    }
-
     .hero h1 {
         font-size: 2.5rem;
     }
