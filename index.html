@@ -528,7 +528,7 @@
         <div class="modal-content glass-card">
             <div class="modal-icon">✅</div>
             <h3>¡Gracias por tu registro!</h3>
-            <p>Hemos recibido tu información y nos contactaremos contigo muy pronto.</p>
+            <p id="success-modal-msg">Hemos recibido tu información y nos contactaremos contigo muy pronto.</p>
             <button id="close-modal-btn" class="btn-primary">Aceptar</button>
         </div>
     </div>
@@ -562,7 +562,7 @@
                     </svg>
                     @clubdeliderazgocolombia
                 </a>
-                <p style="color: white; opacity: 0.8;">+57 300 6950931</p>
+                <p style="color: white; opacity: 0.8;">+57 3237485974</p>
                 <p style="color: white; opacity: 0.8;">Sede Central: Bogotá, Colombia</p>
             </div>
         </div>
@@ -616,6 +616,13 @@
                     });
 
                     if (response.ok) {
+                        const formData = new FormData(form);
+                        const userEmail = formData.get('email');
+                        const msgElement = document.getElementById('success-modal-msg');
+                        if (msgElement && userEmail) {
+                            msgElement.innerHTML = `Hemos recibido tu información y te contactaremos al correo <strong>${userEmail}</strong> muy pronto.`;
+                        }
+
                         // Mostrar modal y limpiar formulario
                         modal.classList.add('active');
                         form.reset();
@@ -815,7 +822,7 @@
         });
     </script>
     <!-- Floating WhatsApp Icon -->
-    <a href="https://wa.me/573006950931?text=Hola!%20Estoy%20interesad%40%20en%20la%20certificación%20%22Liderando%20la%20transici%C3%B3n%20hacia%20una%20IA%20con%20prop%C3%B3sito%20humano%22."
+    <a href="https://wa.me/573237485974?text=Hola!%20Estoy%20interesad%40%20en%20la%20certificaci%C3%B3n%20%22Liderando%20Humano%20%2B%20AI%22."
         class="float-wa" target="_blank" aria-label="WhatsApp">
         <svg viewBox="0 0 24 24" fill="currentColor" width="35" height="35">
             <path
