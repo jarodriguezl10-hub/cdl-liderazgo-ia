@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM | Club de Liderazgo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="crm.css?v=2">
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div id="login-screen" class="screen active">
+        <div class="login-card glass-card">
+            <h2 id="auth-title" class="gradient-text">Acceso al CRM</h2>
+            <p id="auth-desc">Ingresa tus credenciales para administrar tus prospectos.</p>
+            
+            <form id="auth-form" onsubmit="event.preventDefault(); handleAuth();">
+                <div id="register-fields" style="display: none;">
+                    <input type="text" id="reg-name" class="input-modern" placeholder="Tu nombre completo" style="margin-top: 1rem;">
+                </div>
+                
+                <input type="email" id="login-email" class="input-modern" placeholder="tu@correo.com" style="margin-top: 1rem;" autocomplete="off" required>
+                
+                <div style="position: relative; width: 100%;">
+                    <input type="password" id="login-password" class="input-modern" placeholder="Tu contraseña" style="margin-top: 0.5rem; margin-bottom: 1rem; padding-right: 3rem;" autocomplete="off" required>
+                    <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 10px; top: 18px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.2rem;">👁️</button>
+                </div>
+                
+                <button type="submit" id="btn-auth-submit" class="btn-primary" style="width: 100%; margin-bottom: 0.5rem;">Ingresar</button>
+                <button type="button" id="btn-toggle-auth" onclick="toggleAuthMode()" class="btn-secondary" style="width: 100%; margin-bottom: 0.5rem; font-size: 0.85rem; border: none;">¿No tienes cuenta? Regístrate</button>
+                
+                <hr style="border-color: rgba(255,255,255,0.05); margin: 0.5rem 0 1rem;">
+
+            </form>
+            
+            <p id="login-error" class="error-msg" style="display: none; margin-top: 1rem; color: #ef4444; font-size: 0.9rem;"></p>
+            <p id="login-success" style="display: none; margin-top: 1rem; color: #10B981; font-size: 0.9rem;"></p>
+        </div>
+    </div>
+
+    <!-- PANTALLA PRINCIPAL CRM -->
+    <div id="crm-screen" class="screen">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>CRM<span class="ai-text">.AI</span></h2>
+            </div>
+            <nav class="sidebar-nav" id="projects-list">
+                <!-- Se llena dinámicamente vía JS -->
+            </nav>
+            <div style="padding: 0 1rem; margin-top: 1rem;">
+                <button class="btn-secondary" onclick="crearNuevoProyecto()" style="width: 100%; font-size: 0.8rem; border-style: dashed; opacity: 0.8;">➕ Nuevo Proyecto</button>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span id="user-email" style="font-size: 0.85rem; word-break: break-all;">usuario@email.com</span>
+                </div>
+                <button id="btn-logout" class="btn-secondary" style="width: 100%; border-color: rgba(255,255,255,0.1); margin-top: 0.5rem; padding: 0.5rem;">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <!-- Main Content (Kanban) -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="active-project-title">Cargando proyecto...</h1>
+                <div class="topbar-actions">
+                    <button class="btn-primary" onclick="openCreateModal()" style="padding: 0.5rem 1rem; background: var(--accent-grad); margin-right: 0.5rem;">➕ Nuevo Prospecto</button>
+                    <button class="btn-primary" onclick="loadProspectos()" style="padding: 0.5rem 1rem;">🔄 Refrescar</button>
+                </div>
+            </header>
+
+            <div class="board-container">
+                <!-- Column: Nuevo -->
+                <div class="board-column" data-status="Nuevo">
+                    <div class="column-header">
+                        <h3>Nuevos</h3>
+                        <span class="count-badge" id="count-Nuevo">0</span>
+                    </div>
+                    <div class="column-body" id="col-Nuevo"></div>
+                </div>
+
+                <!-- Column: Contactado -->
+                <div class="board-column" data-status="Contactado">
+                    <div class="column-header">
+                        <h3>Contactados</h3>
+                        <span class="count-badge" id="count-Contactado">0</span>
+                    </div>
+                    <div class="column-body" id="col-Contactado"></div>
+                </div>
+
+                <!-- Column: Negociación -->
+                <div class="board-column" data-status="Negociación">
+                    <div class="column-header">
+                        <h3>En Negociación</h3>
+                        <span class="count-badge" id="count-Negociación">0</span>
+                    </div>
+                    <div class="column-body" id="col-Negociación"></div>
+                </div>
+
+
+
+                <!-- Column: Pagado -->
+                <div class="board-column" data-status="Pagado">
+                    <div class="column-header">
+                        <h3>Inscritos / Pagados</h3>
+                        <span class="count-badge" id="count-Pagado">0</span>
+                    </div>
+                    <div class="column-body" id="col-Pagado"></div>
+                </div>
+
+                <!-- Column: Descartado -->
+                <div class="board-column" data-status="Descartado">
+                    <div class="column-header">
+                        <h3>Descartados</h3>
+                        <span class="count-badge" id="count-Descartado">0</span>
+                    </div>
+                    <div class="column-body" id="col-Descartado"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL DETALLE DE CLIENTE -->
+    <div id="detail-modal" class="modal-overlay">
+        <div class="detail-drawer">
+            <button class="btn-close" onclick="closeDetailModal()">×</button>
+            
+            <div class="drawer-header">
+                <h2 id="det-nombre">Nombre Cliente</h2>
+                <div class="drawer-meta">
+                    <span id="det-email">✉️ email@email.com</span>
+                    <span id="det-telefono">📱 30000000</span>
+                </div>
+            </div>
+
+            <div class="drawer-tabs">
+                <button class="tab-btn active" onclick="switchTab('info')">Información</button>
+                <button class="tab-btn" onclick="switchTab('acuerdo')">Acuerdo de Pago</button>
+                <button class="tab-btn" onclick="switchTab('registro')">Registrar Abono</button>
+            </div>
+
+            <!-- Tab: Info & Interacciones -->
+            <div id="tab-info" class="tab-content active">
+                <div class="form-group">
+                    <label>Estado Estratégico</label>
+                    <select id="det-estado" class="input-modern" onchange="updateEstado()">
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Contactado">Contactado</option>
+                        <option value="Negociación">En Negociación</option>
+                        <option value="Pagado">Inscrito / Pagado</option>
+                        <option value="Descartado">Descartado</option>
+                    </select>
+                </div>
+
+
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+
+                <h3>Registrar Interacción</h3>
+                <div class="interaccion-form">
+                    <select id="int-tipo" class="input-modern" style="margin-bottom: 0.5rem;">
+                        <option value="Llamada">Llamada</option>
+                        <option value="Whatsapp">WhatsApp</option>
+                        <option value="Correo">Correo</option>
+                    </select>
+                    <textarea id="int-notas" class="input-modern" placeholder="¿Qué hablaron?" rows="3" style="margin-bottom: 0.5rem;"></textarea>
+                    <button class="btn-primary" onclick="addInteraccion()" style="width: 100%;">Guardar Registro</button>
+                    
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label>📅 Programar Próximo Seguimiento</label>
+                        <input type="date" id="det-proximo" class="input-modern" onchange="updateProximoContacto()">
+                    </div>
+                </div>
+
+                <div class="history-list" id="det-history">
+                    <!-- History items via JS -->
+                </div>
+            </div>
+
+            <!-- Tab: Acuerdo de Pago (Característica) -->
+            <div id="tab-acuerdo" class="tab-content" style="display: none;">
+                <div class="balance-card">
+                    <div style="display: flex; justify-content: space-around; align-items: center;">
+                        <div>
+                            <p style="color: var(--accent-blue); font-size: 0.75rem;">TOTAL ABONADO</p>
+                            <h2 id="det-total-pagado" style="color: var(--accent-blue); font-size: 1.8rem;">$0</h2>
+                        </div>
+                        <div style="font-size: 2rem; opacity: 0.3; color: white;">/</div>
+                        <div>
+                            <p style="color: var(--text-muted); font-size: 0.75rem;">INVERSIÓN TOTAL</p>
+                            <h2 id="det-total-inversion" style="color: var(--text-muted); font-size: 1.8rem;">$0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>Inversión / Costo Final Certificación</label>
+                    <input type="number" id="det-costo-final" class="input-modern" placeholder="$ 0">
+                </div>
+
+                <div class="form-group">
+                    <label>Modalidad de Pago</label>
+                    <select id="det-modalidad" class="input-modern">
+                        <option value="Contado">Contado</option>
+                        <option value="Crédito">Crédito</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Observaciones de Forma de Pago (Créditos / Cuotas)</label>
+                    <textarea id="det-observaciones-pago" class="input-modern" rows="4" placeholder="Describa el acuerdo de pago..."></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="saveAcuerdoPago()" style="width: 100%; margin-top: 1rem;">💾 Guardar Acuerdo de Pago</button>
+
+                <div class="history-list" id="det-acuerdo-history" style="margin-top: 1.5rem;">
+                    <!-- Historial de cambios de acuerdo via JS -->
+                </div>
+            </div>
+
+            <!-- Tab: Registrar Abono -->
+            <div id="tab-registro" class="tab-content" style="display: none;">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Tipo de Pago</label>
+                        <select id="det-tipo-pago" class="input-modern" onchange="toggleExtraPaymentFields()">
+                            <option value="Total">Pago Total</option>
+                            <option value="Abono">Abono / Cuota</option>
+                        </select>
+                    </div>
+                    <!-- Campo Condicional -->
+                    <div id="wrapper-fecha-siguiente" class="form-group" style="flex: 1; display: none;">
+                        <label>Fecha Siguiente Pago</label>
+                        <input type="date" id="det-fecha-siguiente" class="input-modern" onchange="updateCamposExtra()">
+                    </div>
+                </div>
+
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+
+                <h3>Registrar Nuevo Abono / Pago</h3>
+                <div class="pago-form">
+                    <input type="number" id="pago-monto" class="input-modern" placeholder="$ Valor del Pago (Ej: 500000)" style="margin-bottom: 0.5rem;">
+                    <select id="pago-metodo" class="input-modern" style="margin-bottom: 0.5rem;">
+                        <option value="Transferencia">Transferencia Bancaria</option>
+                        <option value="Nequi">Nequi / Bre-B</option>
+                        <option value="Tarjeta">Tarjeta de Crédito</option>
+                        <option value="Efectivo">Efectivo</option>
+                    </select>
+                    <input type="text" id="pago-notas" class="input-modern" placeholder="Referencia / Notas" style="margin-bottom: 0.5rem;">
+                    <button class="btn-primary" onclick="addPago()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">Registrar Pago</button>
+                </div>
+
+
+
+                <div class="history-list" id="det-pagos-list">
+                    <!-- Pagos via JS -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal: Crear Nuevo Prospecto -->
+    <div id="create-modal" class="drawer-overlay">
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h2>Nuevo Prospecto</h2>
+                <button class="close-btn" onclick="closeCreateModal()">×</button>
+            </div>
+            <div class="drawer-body">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="new-nombre" class="input-modern" placeholder="Ej: Juan Perez">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono / WhatsApp</label>
+                    <input type="text" id="new-telefono" class="input-modern" placeholder="Ej: 3001234567">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="new-email" class="input-modern" placeholder="Ej: juan@email.com">
+                </div>
+                <div class="form-group">
+                    <label>¿Cómo se enteró de la certificación?</label>
+                    <select id="new-como-se-entero" class="input-modern">
+                        <option value="Landing page">Landing page</option>
+                        <option value="Integrante de Club">Integrante del Club</option>
+                        <option value="Fuerza comercial">Fuerza comercial</option>
+                        <option value="Amigo">Amigo</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Observaciones</label>
+                    <textarea id="new-observaciones" class="input-modern" placeholder="Detalles adicionales..." rows="3"></textarea>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem;">
+                    🎯 Se asociará automáticamente al proyecto:<br>
+                    <strong id="label-active-project-creation">...</strong>
+                </p>
+                <button class="btn-primary" onclick="saveNuevoProspecto()" style="width: 100%; margin-top: 1rem;">🚀 Crear Prospecto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <div id="toast-container"></div>
+    <!-- Supabase client configuration injected via JS -->
+    <script src="crm.js?v=18"></script>
+</body>
+</html>
