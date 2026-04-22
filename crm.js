@@ -91,15 +91,22 @@ function parseCurrency(str) {
 // ==========================================
 async function loadProyectos() {
     const { data, error } = await db.from('crm_proyectos').select('*').order('nombre', { ascending: true });
-    if(error) return;
+    if(error || !data || data.length === 0) return;
 
     const list = document.getElementById('projects-list');
     list.innerHTML = '';
     
+    let foundActive = false;
+
     data.forEach(p => {
         const a = document.createElement('a');
         a.href = "#";
-        a.className = `nav-item ${p.nombre === activeProjectName ? 'active' : ''}`;
+        if (p.nombre === activeProjectName) {
+            a.className = 'nav-item active';
+            foundActive = true;
+        } else {
+            a.className = 'nav-item';
+        }
         a.innerHTML = `🎯 ${p.nombre}`;
         a.onclick = (e) => {
             e.preventDefault();
@@ -108,7 +115,14 @@ async function loadProyectos() {
         list.appendChild(a);
     });
 
-    // Actualizar títulos
+    // Validar si el proyecto en caché ya no existe (por ejemplo, fue renombrado)
+    if (!foundActive && data.length > 0) {
+        // En lugar de renderizar el inválido, seleccionamos automáticamente el primero
+        selectProject(data[0].nombre);
+        return; // selectProject ya va a recargar UI y prospectos
+    }
+
+    // Actualizar títulos si lo encontró
     document.getElementById('active-project-title').textContent = activeProjectName;
     const projectLabel = document.getElementById('label-active-project-creation');
     if(projectLabel) projectLabel.textContent = activeProjectName;
@@ -287,6 +301,13 @@ async function openDetailModal(id) {
     const p = prospectosData.find(x => x.id === id);
     if (!p) return;
 
+    // Limpiar campos de nuevos registros para que no se hereden de la tarjeta anterior
+    document.getElementById('int-notas').value = '';
+    document.getElementById('int-tipo').selectedIndex = 0;
+    document.getElementById('pago-monto').value = '';
+    document.getElementById('pago-notas').value = '';
+    document.getElementById('pago-metodo').selectedIndex = 0;
+
     document.getElementById('det-nombre').textContent = p.nombre;
     document.getElementById('det-email').textContent = '✉️ ' + p.email;
     document.getElementById('det-telefono').textContent = '📱 ' + p.telefono;
@@ -331,7 +352,11 @@ function switchTab(tabId) {
 }
 
 async function updateEstado() {
-    await db.from('crm_prospectos').update({ estado: document.getElementById('det-estado').value }).eq('id', currentProspectoId);
+    const { error } = await db.from('crm_prospectos').update({ estado: document.getElementById('det-estado').value }).eq('id', currentProspectoId);
+    if (error) {
+        alert("Error al actualizar estado: " + error.message);
+        return;
+    }
     showToast("Estado actualizado");
     loadProspectos();
 }
@@ -358,6 +383,8 @@ async function saveAcuerdoPago() {
             renderAcuerdoHistory();
         }
         showToast("Acuerdo guardado");
+    } else {
+        alert("Error al guardar acuerdo: " + error.message);
     }
 }
 
@@ -390,7 +417,11 @@ async function addInteraccion() {
     const tipo = document.getElementById('int-tipo').value;
     const notas = document.getElementById('int-notas').value;
     if(!notas) return;
-    await db.from('crm_interacciones').insert([{ prospecto_id: currentProspectoId, tipo, notas }]);
+    const { error } = await db.from('crm_interacciones').insert([{ prospecto_id: currentProspectoId, tipo, notas }]);
+    if (error) {
+        alert("Error al registrar interacción: " + error.message);
+        return;
+    }
     await db.from('crm_prospectos').update({ fecha_ultimo_contacto: new Date().toISOString() }).eq('id', currentProspectoId);
     document.getElementById('int-notas').value = '';
     document.getElementById('int-tipo').selectedIndex = 0;
@@ -427,7 +458,11 @@ async function addPago() {
     const metodo = document.getElementById('pago-metodo').value;
     const notas = document.getElementById('pago-notas').value;
     if(!monto || isNaN(monto)) return;
-    await db.from('crm_pagos').insert([{ prospecto_id: currentProspectoId, monto, metodo, notas }]);
+    const { error } = await db.from('crm_pagos').insert([{ prospecto_id: currentProspectoId, monto, metodo, notas }]);
+    if (error) {
+        alert("Error al registrar pago: " + error.message);
+        return;
+    }
     document.getElementById('pago-monto').value = '';
     document.getElementById('pago-notas').value = '';
     document.getElementById('pago-metodo').selectedIndex = 0;
@@ -439,7 +474,11 @@ async function updateCamposExtra() {
     const tipo = document.getElementById('det-tipo-pago').value;
     const fechaSig = document.getElementById('det-fecha-siguiente').value;
     toggleExtraPaymentFields();
-    await db.from('crm_prospectos').update({ tipo_pago_preferido: tipo, fecha_siguiente_pago: fechaSig || null }).eq('id', currentProspectoId);
+    const { error } = await db.from('crm_prospectos').update({ tipo_pago_preferido: tipo, fecha_siguiente_pago: fechaSig || null }).eq('id', currentProspectoId);
+    if (error) {
+        alert("Error al actualizar campos extra: " + error.message);
+        return;
+    }
     const pIndex = prospectosData.findIndex(x => x.id === currentProspectoId);
     if(pIndex !== -1) {
         prospectosData[pIndex].tipo_pago_preferido = tipo;
@@ -449,7 +488,11 @@ async function updateCamposExtra() {
 
 async function updateProximoContacto() {
     const fecha = document.getElementById('det-proximo').value;
-    await db.from('crm_prospectos').update({ fecha_proximo_contacto: fecha ? (fecha + 'T00:00:00Z') : null }).eq('id', currentProspectoId);
+    const { error } = await db.from('crm_prospectos').update({ fecha_proximo_contacto: fecha ? (fecha + 'T00:00:00Z') : null }).eq('id', currentProspectoId);
+    if (error) {
+        alert("Error al programar seguimiento: " + error.message);
+        return;
+    }
     showToast("Seguimiento programado");
 }
 
